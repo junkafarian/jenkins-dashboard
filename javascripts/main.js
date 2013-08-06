@@ -5,17 +5,24 @@ if(typeof window.jenkinsDash === 'undefined') window.jenkinsDash = {};
   manager.callbackCount = 0;
 
   manager.update = function(data, settings){
-    var job, i, _i, j, _j,
+    var job, job_data, i, _i, j, _j,
         projectCount = jenkinsDash.Project.count();
 
     for(i=0, _i=data.views.length; i<_i; i++){
       if(data.views[i].name === settings.view){
         for(j=0, _j=data.views[i].jobs.length; j<_j; j++){
-          job = jenkinsDash.Project.find(settings, data.views[i].jobs[j]);
+          job_data = data.views[i].jobs[j];
+          job = jenkinsDash.Project.find(settings, job_data);
+
+          console.log(job)
+          console.log(job_data.name)
+          console.log(settings.jobs.indexOf(job_data.name))
           if(job === false){
-            job = new jenkinsDash.Project(settings, data.views[i].jobs[j]);
+            if (settings.jobs.indexOf(job_data.name) > -1) {
+              job = new jenkinsDash.Project(settings, job_data);
+            }
           } else {
-            job.update(data.views[i].jobs[j]);
+            job.update(job_data);
           }
         }
       }

@@ -6,6 +6,7 @@ jenkinsDash.settings = [
     host: 'http://my.jenkins.host.com',
     user: 'username',
     pass: 'password',
-    view: 'All'
+    view: 'All',
+    jobs: []
   }
 ];
